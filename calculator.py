@@ -12,7 +12,7 @@ class Calc():
     def __add__(self, other):
         '''Calc1 + Calc2 combines the totals and the lists of caclulations.'''
         self.calculations.extend(other.calculations)
-        self.total = other.total
+        self.total += other.total
         return self
 
     def notecalc(self, op, op1, op2):
@@ -57,6 +57,14 @@ class Calc():
         self.notecalc('*', op1, op2)
         return self.total
 
+    def div(self, op1, op2=None):
+        if op2 == None:
+            op2 = op1
+            op1 = self.total
+        self.total = op1 / op2
+        self.notecalc('*', op1, op2)
+        return self.total
+
     def pow(self, op1, op2=None):
         '''Raise a number to a power. If no number supplied, raise the
         running total to the power. 
@@ -96,3 +104,13 @@ class Calc():
         '''All clear--set total to 0 and erase the list of calculations.'''
         self.calculations = []
         self.total = 0
+
+
+if __name__ == '__main__':
+    c = Calc()
+    c.add(1, 2)
+    c.mult(5)
+    c.div(2)
+    c.pow(2)
+
+    print(c.showcalc())
